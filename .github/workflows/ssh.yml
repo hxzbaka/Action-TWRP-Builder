@@ -16,6 +16,9 @@ jobs:
         echo "Makefile Name: ${{ github.event.inputs.MAKEFILE_NAME }}"
         echo "Build Target: ${{ github.event.inputs.BUILD_TARGET }}.img"
         echo "::endgroup::"
+
+    - name: Setup Debug Session
+      uses: csexton/debugger-action@master
     
     - name: Install OpenJDK
       run: |
