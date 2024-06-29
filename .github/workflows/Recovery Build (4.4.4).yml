@@ -10,7 +10,7 @@ on:
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
-        default: 'twrp-4.4-deprecated'
+        default: 'twrp-5.1'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
@@ -77,24 +77,10 @@ jobs:
         sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libncurses5 python3
 
     - name: Install OpenJDK
-      run: |
-        sudo mkdir /usr/lib/java
-        cd /usr/lib/java
-        pwd
-        sudo wget https://repo.huaweicloud.com/java/jdk/6u45-b06/jdk-6u45-linux-x64.bin
-        sudo chmod 777 jdk-6u45-linux-x64.bin
-        sudo sh -c './jdk-6u45-linux-x64.bin'
-        echo "set java file"
-        sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/java/jdk1.6.0_45/bin/java" 1
-        sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/java/jdk1.6.0_45/bin/javac" 1
-        sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/lib/java/jdk1.6.0_45/bin/javaws" 1
-        echo "set java"
-        sudo echo 'export JAVA_HOME=/usr/lib/java/jdk1.6.0_45' >> ~/.bashrc
-        sudo echo 'export PATH="$PATH:$JAVA_HOME/bin' >> ~/.bashrc
-        echo "okey"
-        cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
-        java -version
-        echo "end"
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '8'
 
     - name: Setup SSH Keys
       if: ${{ startsWith(github.event.inputs.MANIFEST_URL, 'git@github.com') }}
