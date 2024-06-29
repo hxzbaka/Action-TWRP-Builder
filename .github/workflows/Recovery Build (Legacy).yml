@@ -89,8 +89,6 @@ jobs:
         sudo sh -c 'echo "export PATH=$PATH:$JAVA_HOME/bin" >> /etc/profile'
         sudo sh -c 'echo "export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar" >> /etc/profile'
         sudo sh -c 'echo "export JAVA_HOME JAVA_BIN PATH CLASSPATH" >> /etc/profile'
-        echo "rm java"
-        sudo rm /usr/bin/java
         echo "set java"
         sudo -s
         source /etc/profile
