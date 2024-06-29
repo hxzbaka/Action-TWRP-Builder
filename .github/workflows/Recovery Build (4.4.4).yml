@@ -156,14 +156,18 @@ jobs:
         sudo rm -rf /usr/bin/python
         sudo ln -s /usr/bin/python2 /usr/bin/python
         # sudo ln -s /usr/bin/python3 /usr/bin/python3
+        echo ${{ steps.pwd.outputs.workspace-folder }}
       continue-on-error: true
+      
+    - name: Setup Debug Session
+      uses: csexton/debugger-action@master
 
-    - name: Building recovery
-      run: |
-        source build/envsetup.sh
-        export ALLOW_MISSING_DEPENDENCIES=true
-        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+#    - name: Building recovery
+#      run: |
+#        source build/envsetup.sh
+#        export ALLOW_MISSING_DEPENDENCIES=true
+#        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+#      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
