@@ -17,21 +17,18 @@ jobs:
         echo "Build Target: ${{ github.event.inputs.BUILD_TARGET }}.img"
         echo "::endgroup::"
     
-    - name: Setup Debug Session
-      uses: csexton/debugger-action@master
-
-    - name: Upload to Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: | 
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*vendor*.img
-        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
-        tag_name: ${{ github.run_id }}
-        body: |
-          Manifest: ${{ github.event.inputs.MANIFEST_BRANCH }}
-          Device: ${{ github.event.inputs.DEVICE_NAME }}
-          Target: ${{ github.event.inputs.BUILD_TARGET }}.img
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install OpenJDK
+      run: |
+        sudo mkdir /usr/java
+        cd /usr/java
+        sudo wget https://repo.huaweicloud.com/java/jdk/6u45-b06/jdk-6u45-linux-x64.bin
+        sudo chmod 777 jdk-6u45-linux-x64.bin
+        ./jdk-6u45-linux-x64.bin
+        sudo sh -c 'echo "export JAVA_HOME=/usr/java/jdk1.6.0_45" >> /etc/profile'
+        sudo sh -c 'echo "export JAVA_BIN=/usr/java/jdk1.6.0_45/bin" >> /etc/profile'
+        sudo sh -c 'echo "export PATH=$PATH:$JAVA_HOME/bin" >> /etc/profile'
+        sudo sh -c 'echo "export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar" >> /etc/profile'
+        sudo sh -c 'echo "export JAVA_HOME JAVA_BIN PATH CLASSPATH" >> /etc/profile'
+        . /etc/profile
+        cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
+        java -version
