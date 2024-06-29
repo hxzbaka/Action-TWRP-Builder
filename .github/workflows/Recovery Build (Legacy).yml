@@ -92,7 +92,6 @@ jobs:
         echo "set java"
         sudo -s
         source /etc/profile
-        . /etc/profile
         echo "okey"
         cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
         java -version
