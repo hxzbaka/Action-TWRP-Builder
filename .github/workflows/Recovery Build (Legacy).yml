@@ -82,7 +82,7 @@ jobs:
         cd /usr/java
         sudo wget https://repo.huaweicloud.com/java/jdk/6u45-b06/jdk-6u45-linux-x64.bin
         sudo chmod 777 jdk-6u45-linux-x64.bin
-        sudo ./jdk-6u45-linux-x64.bin
+        sudo sh -c './jdk-6u45-linux-x64.bin'
         sudo sh -c 'echo "export JAVA_HOME=/usr/java/jdk1.6.0_45" >> /etc/profile'
         sudo sh -c 'echo "export JAVA_BIN=/usr/java/jdk1.6.0_45/bin" >> /etc/profile'
         sudo sh -c 'echo "export PATH=$PATH:$JAVA_HOME/bin" >> /etc/profile'
@@ -90,6 +90,7 @@ jobs:
         sudo sh -c 'echo "export JAVA_HOME JAVA_BIN PATH CLASSPATH" >> /etc/profile'
         . /etc/profile
         cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
+        java -version
 
     - name: Setup SSH Keys
       if: ${{ startsWith(github.event.inputs.MANIFEST_URL, 'git@github.com') }}
