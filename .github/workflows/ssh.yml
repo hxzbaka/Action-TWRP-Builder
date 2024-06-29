@@ -35,5 +35,5 @@ jobs:
         sudo sh -c '. /etc/profile'
         echo "okey"
         cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
-        which java
         java -version
+        echo "end"
