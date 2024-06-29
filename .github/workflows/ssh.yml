@@ -21,6 +21,7 @@ jobs:
       run: |
         sudo mkdir /usr/java
         cd /usr/java
+        pwd
         sudo wget https://repo.huaweicloud.com/java/jdk/6u45-b06/jdk-6u45-linux-x64.bin
         sudo chmod 777 jdk-6u45-linux-x64.bin
         sudo sh -c './jdk-6u45-linux-x64.bin'
@@ -32,7 +33,7 @@ jobs:
         echo "rm java"
         sudo rm /usr/bin/java
         echo "set java"
-        sudo sh -c '. /etc/profile'
+        sudo sh -c 'source /etc/profile'
         echo "okey"
         cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
         java -version
