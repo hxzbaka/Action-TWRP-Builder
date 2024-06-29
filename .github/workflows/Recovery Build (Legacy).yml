@@ -77,10 +77,18 @@ jobs:
         sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libncurses5 python3
 
     - name: Install OpenJDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '8'
+      run: |
+        sudo mkdir /usr/java
+        cd /usr/java
+        sudo wget https://repo.huaweicloud.com/java/jdk/6u45-b06/jdk-6u45-linux-x64.bin
+        sudo chmod 777 jdk-6u45-linux-x64.bin
+        sudo ./jdk-6u45-linux-x64.bin
+        sudo sh -c 'echo "export JAVA_HOME=/usr/java/jdk1.6.0_45" >> /etc/profile'
+        sudo sh -c 'echo "export JAVA_BIN=/usr/java/jdk1.6.0_45/bin" >> /etc/profile'
+        sudo sh -c 'echo "export PATH=$PATH:$JAVA_HOME/bin" >> /etc/profile'
+        sudo sh -c 'echo "export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar" >> /etc/profile'
+        sudo sh -c 'echo "export JAVA_HOME JAVA_BIN PATH CLASSPATH" >> /etc/profile'
+        cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
 
     - name: Setup SSH Keys
       if: ${{ startsWith(github.event.inputs.MANIFEST_URL, 'git@github.com') }}
