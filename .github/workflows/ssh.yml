@@ -33,6 +33,7 @@ jobs:
         echo "rm java"
         sudo rm /usr/bin/java
         echo "set java"
+        sudo -s
         sudo sh -c 'source /etc/profile'
         echo "okey"
         cd /home/runner/work/Action-TWRP-Builder/Action-TWRP-Builder
